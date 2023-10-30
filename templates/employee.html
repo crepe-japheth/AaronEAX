@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="container-cards">
+  <div class="container-card">
+    <h2>Employee List</h2>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Phone Number</th>
+      </tr>
+      {% for employee in employees %}
+      <tr>
+        <td>{{employee.user.username}}</td>
+        <td>{{employee.position}}</td>
+        <td>{{employee.phone_number}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock main %}
+         

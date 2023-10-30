@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block main %}
+
+<div class="cards">
+    <div class="card">
+        <div class="card-content">
+            <div class="number">{{number}}</div>
+            <div class="card-name">Total Employees</div>
+        </div>
+        <div class="icon-box">
+            <i class="fas fa-users"></i>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-content">
+            <div class="number">{{today_leaves}}</div>
+            <div class="card-name"> Today Total Leaves</div>
+        </div>
+        <div class="icon-box">
+            <i class="fa fa-calendar"></i>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-content">
+            <div class="number">{{leaves_pending}}</div>
+            <div class="card-name">Today pending leaves</div>
+        </div>
+        <div class="icon-box">
+            <i class="fa fa-sitemap"></i>
+        </div>
+    </div>
+
+</div>
+
+<div class="charts">
+    <div class="chart">
+        <h2>Leaves (past 30 days)</h2>
+        <div>
+            <canvas id="lineChart"></canvas>
+        </div>
+    </div>
+    <div class="chart doughnut-chart">
+        <h2>Leaves by categories</h2>
+        <div>
+            <canvas id="doughnut"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- javascripts -->
+<script>
+    var ctx = document.getElementById('lineChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: [{% for leave_day in total_month_leave %}'{{leave_day.leave_date.day}}', {% endfor %}],
+        datasets: [{
+            label: 'Leaving in Months',
+            data: [{% for leave_day in total_month_leave %}'{{leave_day.leave_date__count}}', {% endfor %}],
+            backgroundColor: [
+                'rgba(85,85,85, 1)'
+
+            ],
+            borderColor: 'rgb(41, 155, 99)',
+
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true
+    }
+});
+
+// <!-- chart 2 -->
+
+var ctx2 = document.getElementById('doughnut').getContext('2d');
+var myChart2 = new Chart(ctx2, {
+    type: 'doughnut',
+    data: {
+        labels: [{% for leave_type in total_leave_type %}'{{leave_type.leave_type}}', {% endfor %}],
+
+        datasets: [{
+            label: 'Employees',
+            data: [{% for leave_type in total_leave_type %}'{{leave_type.leave_type__count}}', {% endfor %}],
+            backgroundColor: [
+                'rgba(41, 155, 99, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(120, 46, 139,1)'
+
+            ],
+            borderColor: [
+                'rgba(41, 155, 99, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(120, 46, 139,1)'
+
+            ],
+            borderWidth: 1
+        }]
+
+    },
+    options: {
+        responsive: true
+    }
+});
+</script>
+<!-- end javascripts -->
+
+{% endblock main %}
+        
+

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container-cards">
+    <form  class="container-card" method="post">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-25">
+          <label for="fname">Leave Type</label>
+        </div>
+        <div class="col-75">
+          <div class="col-75">
+            <select id="country" name="leave_type">
+              <option value="sick">Sick</option>
+              <option value="maternity">Maternity</option>
+              <option value="dayoff">Dayoff</option>
+              <option value="anually_leave">Annually leave</option>
+              <option value="other">Other</option>
+            </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="lname">Leave date</label>
+        </div>
+        <div class="col-75">
+          <input type="date" id="lname" name="leaving_date" placeholder="leaving date">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="lname">Returning date</label>
+        </div>
+        <div class="col-75">
+          <input type="date" id="lname" name="returning_date" placeholder="Returning date">
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-25">
+          <label for="subject">comment</label>
+        </div>
+        <div class="col-75">
+          <textarea id="subject" name="comment" placeholder="Write something.." style="height:100px"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <input type="submit" value="Apply leave">
+      </div>
+    </form>
+  </div>
+
+  <!-- applied leave here  -->
+  <div class="container-cards">
+    <div class="container-card">
+      <h2>Applied Leaves</h2>
+      <table>
+        <tr>
+          <th>Leave Type</th>
+          <th>Leave Date</th>
+          <th>Status</th>
+        </tr>
+        {% for leave in leaves %}
+        <tr>
+          <td>{{leave.leave_type}}</td>
+          <td>{{leave.leave_date}}</td>
+          <td>{{leave.status}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+      {% endblock main %}

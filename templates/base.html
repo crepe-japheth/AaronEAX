@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+    <title>EAX Leave Dashboard</title>
+  </head>
+  
+  <body>
+    <div class="container">
+      <div class="topbar">
+        <div class="logo">
+          <img src="{% static 'img/EAX.jpg' %}" alt="" class="img-logo" >
+        </div>
+        <div class="search">
+          <input type="text" name="search" placeholder="search here">
+          <label for="search"><i class="fas fa-search"></i></label>
+        </div>
+        <i class="fas fa-bell"></i>
+        <div class="user">
+          {% if request.user.employee.photo %}
+            <img src="{{request.user.employee.photo.url}}" alt="Profile Picture">
+          {% else %}
+          <img src="{% static 'img/user.png' %}" alt="">
+          {% endif %}
+          <!-- <img src="{% static 'img/user.png' %}" alt=""> -->
+        </div>
+      </div>
+      <div class="sidebar">
+        <ul>
+          <li>
+            <a href="{% url 'home' %}">
+              <i class="fas fa-th-large"></i>
+              <div>Dashboard</div>
+            </a>
+          </li>
+          {% if user.is_superuser %}
+          <li>
+            <a href="{% url 'employee' %}">
+                <i class="fas fa-users"></i>
+                <div>Employees</div>
+            </a>
+        </li>
+        {% endif %}
+        <li>
+            <a href="{% url 'leave' %}">
+                <i class="fas fa-calendar"></i>
+                <div>Leaves</div>
+            </a>
+        </li>
+        {% if user.is_superuser %}
+        <li>
+            <a href="/admin">
+              <i class="fas fa-cog"></i>
+                <div>View admin site</div>
+            </a>
+        </li>
+        {% endif %}
+        <li>
+            <a href="/logout">
+                
+              <i class="fa fa-user"></i>
+              <div>Logout</div>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="main">
+        {% block main %}
+        {% endblock main %}
+      </div>
+      
+    </div>
+    
+    
+  <!-- <script src="{% static 'chart1.js' %}"></script> -->
+  <!-- <script src="{% static 'chart2.js' %}"></script> -->
+</body>
+
+</html>
